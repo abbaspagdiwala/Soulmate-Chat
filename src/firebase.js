@@ -8,7 +8,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAkw3y_itKzpiCBlh9Q4KyWT7ZC7CQ9CRw",
   authDomain: "soulmate-503ac.firebaseapp.com",
   projectId: "soulmate-503ac",
-  storageBucket: "soulmate-503ac.appspot.com",   // ✅ corrected
+  storageBucket: "soulmate-503ac.appspot.com",   
     databaseURL: "https://soulmate-503ac-default-rtdb.asia-southeast1.firebasedatabase.app",
 
   messagingSenderId: "536832012142",
@@ -19,6 +19,7 @@ const app = initializeApp(firebaseConfig);
 
 // ✅ Exports
 export const auth = getAuth(app);
-export const db = getFirestore(app);   // for chat messages
-export const rtdb = getDatabase(app);  // for online/offline users
+export const db = getFirestore(app);   
+export const rtdb = getDatabase(app);  
+
 export { ref, set, onDisconnect, onValue }; 
