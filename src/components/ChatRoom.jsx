@@ -16,15 +16,14 @@ import {
 } from "firebase/firestore";
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 
-// Video Call Component
 function VideoCall({ user, activeUser, onLeaveCall }) {
   const roomID = [user.uid, activeUser.uid].sort().join("_");
 
   useEffect(() => {
     let zp;
     const startCall = async () => {
-      const appID = 1748901116; // Aapka AppID
-      const serverSecret = "7b28adcae2892fa9779078bcc1d8a224"; // Aapka Server Secret
+      const appID = 1748901116; 
+      const serverSecret = "7b28adcae2892fa9779078bcc1d8a224"; 
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
         appID,
         serverSecret,
@@ -46,12 +45,12 @@ function VideoCall({ user, activeUser, onLeaveCall }) {
         zp.destroy();
       }
     };
-  }, []); // Empty array ensures this runs only ONCE
+  }, []); 
 
   return <div className="myCallContainer" style={{ width: '100%', height: '100%' }}></div>;
 }
 
-// ChatRoom Component (Final Corrected Version)
+
 const ChatRoom = ({ user, setUser, sessionId }) => {
   const [users, setUsers] = useState([]);
   const [activeUser, setActiveUser] = useState(null);
@@ -64,7 +63,6 @@ const ChatRoom = ({ user, setUser, sessionId }) => {
 
   const getConversationId = (uid1, uid2) => [uid1, uid2].sort().join("_");
 
-  // Global listener for incoming calls
   useEffect(() => {
     const callsQuery = query(
       collection(db, "calls"),
@@ -83,7 +81,6 @@ const ChatRoom = ({ user, setUser, sessionId }) => {
     return () => unsubscribe();
   }, [user.uid, users]);
 
-  // Listener for the status of the currently active chat's call
   useEffect(() => {
     if (!activeUser) {
       setCallStatus(null);
@@ -99,7 +96,6 @@ const ChatRoom = ({ user, setUser, sessionId }) => {
     return () => unsubscribe();
   }, [activeUser, user.uid]);
   
-  // Load all users
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "users"), (snapshot) => {
       const list = snapshot.docs.map((doc) => doc.data()).filter((u) => u.uid !== user.uid);
@@ -108,7 +104,6 @@ const ChatRoom = ({ user, setUser, sessionId }) => {
     return () => unsubscribe();
   }, [user.uid]);
 
-  // Sync online/offline status
   useEffect(() => {
     const statusRef = ref(rtdb, "status");
     const unsubscribe = onValue(statusRef, (snapshot) => {
@@ -124,10 +119,9 @@ const ChatRoom = ({ user, setUser, sessionId }) => {
     return () => unsubscribe();
   }, []);
 
-  // Load messages for the active chat
   useEffect(() => {
     if (!activeUser) {
-        setMessages([]); // Active user na hone par messages clear karein
+        setMessages([]); 
         return;
     };
     const convId = getConversationId(user.uid, activeUser.uid);
@@ -139,7 +133,6 @@ const ChatRoom = ({ user, setUser, sessionId }) => {
     return () => unsubscribe();
   }, [activeUser, user.uid]);
 
-  // All handler functions
   const sendMessage = async (e) => {
     e.preventDefault();
     if (!input.trim() || !activeUser) return;
@@ -266,5 +259,6 @@ const ChatRoom = ({ user, setUser, sessionId }) => {
     </div>
   );
 };
+
 
 export default ChatRoom;
