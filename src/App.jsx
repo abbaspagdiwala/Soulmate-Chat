@@ -17,7 +17,7 @@ export default function App() {
       if (currentUser) {
         setUser(currentUser);
 
-        if (!sessionIdRef.current) sessionIdRef.current = Date.now(); // unique session per tab
+        if (!sessionIdRef.current) sessionIdRef.current = Date.now(); 
         const uid = currentUser.uid;
         const userStatusRef = ref(rtdb, `status/${uid}/${sessionIdRef.current}`);
         const connectedRef = ref(rtdb, ".info/connected");
@@ -49,3 +49,4 @@ export default function App() {
 
   return <ChatRoom user={user} setUser={setUser} sessionId={sessionIdRef.current} />;
 }
+
