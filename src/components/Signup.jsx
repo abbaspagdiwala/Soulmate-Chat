@@ -15,7 +15,6 @@ export default function Signup({ switchToLogin }) {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const newUser = userCredential.user;
 
-      // Save user in Firestore
       await setDoc(doc(db, "users", newUser.uid), {
         uid: newUser.uid,
         email: newUser.email,
@@ -43,3 +42,4 @@ export default function Signup({ switchToLogin }) {
     </div>
   );
 }
+
